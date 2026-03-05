@@ -26,7 +26,7 @@ import Indexing from "./pages/Indexing";
 
 /* ================= POLICY & LEGAL PAGES ================= */
 import PublicationPolicy from "./pages/PublicationPolicy";
-import CopyrightPolicy from "./pages/CopyrightPolicy";
+import CopyrightPolicy from "./pages/CopyRightPolicy";
 import FAQs from "./pages/FAQs";
 import Disclaimer from "./pages/Disclaimer";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
