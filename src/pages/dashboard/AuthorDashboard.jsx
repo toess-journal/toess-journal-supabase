@@ -349,9 +349,8 @@ export default function AuthorDashboard() {
 
       {/* Detail Modal */}
       {selectedPaper && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 z-50">
-          {/* Bottom sheet on mobile, centered modal on sm+ */}
-          <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div style={{position:'fixed',inset:0,zIndex:9999,backgroundColor:'rgba(0,0,0,0.55)',display:'flex',alignItems:'flex-end',justifyContent:'center'}} className="sm:items-center sm:p-4">
+          <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-3xl shadow-2xl" style={{maxHeight:'90vh',overflowY:'auto'}}>
             <div className="sticky top-0 bg-white border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
               <h2 className="text-lg sm:text-xl font-bold text-slate-900">Manuscript Details</h2>
               <button onClick={() => setSelectedPaper(null)} className="p-1.5 sm:p-2 hover:bg-slate-100 rounded-lg transition">

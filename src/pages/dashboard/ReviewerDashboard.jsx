@@ -308,8 +308,8 @@ export default function ReviewerDashboard() {
 
       {/* Submit Review Modal — bottom sheet on mobile, centered on sm+ */}
       {selectedAssignment && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
-          <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-3xl max-h-[95vh] overflow-y-auto shadow-2xl">
+        <div style={{position:'fixed',inset:0,zIndex:9999,backgroundColor:'rgba(0,0,0,0.6)',display:'flex',alignItems:'flex-end',justifyContent:'center'}} className="sm:items-center sm:p-4">
+          <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-3xl shadow-2xl" style={{maxHeight:'95vh',overflowY:'auto'}}>
 
             {/* Modal Header */}
             <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-4 sm:p-6 rounded-t-2xl sticky top-0 z-10">
