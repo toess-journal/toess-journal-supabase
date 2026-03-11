@@ -22,9 +22,9 @@ const StatusBadge = ({ status }) => {
   const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.submitted;
   const Icon = cfg.icon;
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${cfg.color}`}>
-      <Icon className="w-3.5 h-3.5" />
-      {cfg.label}
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${cfg.color}`}>
+      <Icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+      <span className="truncate">{cfg.label}</span>
     </span>
   );
 };
@@ -47,7 +47,6 @@ export default function AuthorDashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // ✅ Fixed: await getUser() and use user.id (not user.uid)
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { navigate('/login'); return; }
       try {
@@ -75,51 +74,51 @@ export default function AuthorDashboard() {
 
   const ReviewerBanner = () => {
     if (reviewerStatus === "approved") return (
-      <div className="bg-green-50 border border-green-200 rounded-xl p-5 mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <CheckCircle className="w-6 h-6 text-green-600" />
+      <div className="bg-green-50 border border-green-200 rounded-xl p-4 sm:p-5 mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between">
+        <div className="flex items-start sm:items-center gap-3">
+          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 flex-shrink-0 mt-0.5 sm:mt-0" />
           <div>
-            <p className="font-semibold text-green-900">You're an Approved Reviewer!</p>
-            <p className="text-sm text-green-700">Access your reviewer dashboard to see assigned papers.</p>
+            <p className="font-semibold text-green-900 text-sm sm:text-base">You're an Approved Reviewer!</p>
+            <p className="text-xs sm:text-sm text-green-700">Access your reviewer dashboard to see assigned papers.</p>
           </div>
         </div>
         <button onClick={() => navigate("/reviewer/dashboard")}
-          className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition">
+          className="self-start sm:self-auto px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 transition flex-shrink-0">
           Reviewer Dashboard →
         </button>
       </div>
     );
     if (reviewerStatus === "pending") return (
-      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-5 mb-8 flex items-center gap-3">
-        <Clock className="w-6 h-6 text-yellow-600 shrink-0" />
+      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 sm:p-5 mb-6 sm:mb-8 flex items-start gap-3">
+        <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600 flex-shrink-0 mt-0.5" />
         <div>
-          <p className="font-semibold text-yellow-900">Reviewer Application Pending</p>
-          <p className="text-sm text-yellow-700">Your application is under review. You'll be notified once approved.</p>
+          <p className="font-semibold text-yellow-900 text-sm sm:text-base">Reviewer Application Pending</p>
+          <p className="text-xs sm:text-sm text-yellow-700">Your application is under review. You'll be notified once approved.</p>
         </div>
       </div>
     );
     if (reviewerStatus === "rejected") return (
-      <div className="bg-red-50 border border-red-200 rounded-xl p-5 mb-8 flex items-center gap-3">
-        <XCircle className="w-6 h-6 text-red-600 shrink-0" />
+      <div className="bg-red-50 border border-red-200 rounded-xl p-4 sm:p-5 mb-6 sm:mb-8 flex items-start gap-3">
+        <XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0 mt-0.5" />
         <div>
-          <p className="font-semibold text-red-900">Reviewer Application Not Approved</p>
-          <p className="text-sm text-red-700">Your previous application was not approved. Contact the editorial team for more information.</p>
+          <p className="font-semibold text-red-900 text-sm sm:text-base">Reviewer Application Not Approved</p>
+          <p className="text-xs sm:text-sm text-red-700">Your previous application was not approved. Contact the editorial team for more information.</p>
         </div>
       </div>
     );
     return (
-      <div className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-xl p-5 mb-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center shrink-0">
-            <Users className="w-5 h-5 text-white" />
+      <div className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-xl p-4 sm:p-5 mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:justify-between">
+        <div className="flex items-start sm:items-center gap-3">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+            <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
           <div>
-            <p className="font-semibold text-indigo-900">Interested in Peer Reviewing?</p>
-            <p className="text-sm text-indigo-700">Join our reviewer panel and help evaluate research submissions.</p>
+            <p className="font-semibold text-indigo-900 text-sm sm:text-base">Interested in Peer Reviewing?</p>
+            <p className="text-xs sm:text-sm text-indigo-700">Join our reviewer panel and help evaluate research submissions.</p>
           </div>
         </div>
         <button onClick={() => navigate("/reviewer-registration")}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition shrink-0">
+          className="self-start sm:self-auto px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition flex-shrink-0">
           Apply as Reviewer →
         </button>
       </div>
@@ -128,78 +127,83 @@ export default function AuthorDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+
       {/* Header */}
       <div className="bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+          <div className="flex items-start sm:items-center justify-between gap-3">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">Author Dashboard</h1>
-              <p className="text-slate-600 text-sm mt-1">Manage your manuscripts and track review status</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Author Dashboard</h1>
+              <p className="text-slate-600 text-xs sm:text-sm mt-0.5 sm:mt-1">Manage your manuscripts and track review status</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 flex-shrink-0">
+              {/* Guidelines: icon-only on mobile, full label on sm+ */}
               <button onClick={() => navigate('/guidelines')}
-                className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition flex items-center gap-2">
-                <BookOpen className="w-4 h-4" /> Guidelines
+                className="p-2 sm:px-4 sm:py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition flex items-center gap-2">
+                <BookOpen className="w-4 h-4" />
+                <span className="hidden sm:inline">Guidelines</span>
               </button>
               <button onClick={() => navigate('/submit')}
-                className="px-4 py-2 text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 rounded-lg transition flex items-center gap-2">
-                <Plus className="w-4 h-4" /> New Submission
+                className="px-3 py-2 sm:px-4 text-xs sm:text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 rounded-lg transition flex items-center gap-1.5 sm:gap-2">
+                <Plus className="w-4 h-4 flex-shrink-0" />
+                <span className="hidden xs:inline">New Submission</span>
+                <span className="xs:hidden">Submit</span>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <ReviewerBanner />
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           {[
             { label: "Total Submissions", value: stats.total,     icon: FileText,    bg: "bg-indigo-100",  text: "text-indigo-600" },
             { label: "Under Review",      value: stats.inReview,  icon: Clock,       bg: "bg-amber-100",   text: "text-amber-600" },
             { label: "Accepted",          value: stats.accepted,  icon: CheckCircle, bg: "bg-emerald-100", text: "text-emerald-600" },
             { label: "Published",         value: stats.published, icon: Award,       bg: "bg-blue-100",    text: "text-blue-600" },
           ].map((stat, i) => (
-            <div key={i} className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
-              <div className="flex items-center justify-between mb-3">
-                <div className={`w-12 h-12 ${stat.bg} rounded-lg flex items-center justify-center`}>
-                  <stat.icon className={`w-6 h-6 ${stat.text}`} />
+            <div key={i} className="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-sm hover:shadow-md transition">
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
+                <div className={`w-9 h-9 sm:w-12 sm:h-12 ${stat.bg} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                  <stat.icon className={`w-4 h-4 sm:w-6 sm:h-6 ${stat.text}`} />
                 </div>
-                <span className={`text-3xl font-bold ${stat.text}`}>{stat.value}</span>
+                <span className={`text-2xl sm:text-3xl font-bold ${stat.text}`}>{stat.value}</span>
               </div>
-              <p className="text-sm font-medium text-slate-600">{stat.label}</p>
+              <p className="text-xs sm:text-sm font-medium text-slate-600 leading-snug">{stat.label}</p>
             </div>
           ))}
         </div>
 
         {/* Quick Actions */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-indigo-50 to-blue-50 p-6 rounded-xl border border-indigo-200 hover:shadow-md transition">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Upload className="w-6 h-6 text-white" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <div className="bg-gradient-to-br from-indigo-50 to-blue-50 p-4 sm:p-6 rounded-xl border border-indigo-200 hover:shadow-md transition">
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Upload className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-slate-900 mb-2">Submit New Manuscript</h3>
-                <p className="text-sm text-slate-600 mb-4">Submit your original research for double-blind peer review.</p>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1 sm:mb-2">Submit New Manuscript</h3>
+                <p className="text-xs sm:text-sm text-slate-600 mb-3 sm:mb-4">Submit your original research for double-blind peer review.</p>
                 <button onClick={() => navigate('/submit')}
-                  className="px-6 py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition">
+                  className="px-4 sm:px-6 py-2 bg-indigo-600 text-white rounded-lg text-xs sm:text-sm font-semibold hover:bg-indigo-700 transition">
                   Start Submission
                 </button>
               </div>
             </div>
           </div>
-          <div className="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-xl border border-slate-200 hover:shadow-md transition">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-slate-700 rounded-lg flex items-center justify-center flex-shrink-0">
-                <BookOpen className="w-6 h-6 text-white" />
+          <div className="bg-gradient-to-br from-slate-50 to-slate-100 p-4 sm:p-6 rounded-xl border border-slate-200 hover:shadow-md transition">
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-slate-900 mb-2">Author Guidelines</h3>
-                <p className="text-sm text-slate-600 mb-4">Review formatting requirements and submission policies.</p>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1 sm:mb-2">Author Guidelines</h3>
+                <p className="text-xs sm:text-sm text-slate-600 mb-3 sm:mb-4">Review formatting requirements and submission policies.</p>
                 <button onClick={() => navigate('/guidelines')}
-                  className="px-6 py-2 bg-white border border-slate-300 rounded-lg text-sm font-semibold hover:bg-slate-50 transition">
+                  className="px-4 sm:px-6 py-2 bg-white border border-slate-300 rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-50 transition">
                   View Guidelines
                 </button>
               </div>
@@ -208,12 +212,12 @@ export default function AuthorDashboard() {
         </div>
 
         {/* Status Guide */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
           <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 flex-shrink-0 mt-0.5" />
             <div>
-              <h3 className="font-semibold text-blue-900 mb-2">Publication Process</h3>
-              <ul className="text-sm text-blue-800 space-y-1.5">
+              <h3 className="font-semibold text-blue-900 mb-1.5 sm:mb-2 text-sm sm:text-base">Publication Process</h3>
+              <ul className="text-xs sm:text-sm text-blue-800 space-y-1 sm:space-y-1.5">
                 <li>• <strong>Submitted</strong> → awaiting reviewer assignment</li>
                 <li>• <strong>Under Review</strong> → being evaluated by expert reviewers</li>
                 <li>• <strong>Revision Required</strong> → revisions requested, check editorial comments</li>
@@ -226,50 +230,50 @@ export default function AuthorDashboard() {
 
         {/* Submissions List */}
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-slate-200 flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-bold text-slate-900">My Submissions</h2>
-              <p className="text-sm text-slate-600 mt-1">Track and manage your manuscript submissions</p>
+          <div className="p-4 sm:p-6 border-b border-slate-200 flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">My Submissions</h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-0.5 sm:mt-1 hidden xs:block">Track and manage your manuscript submissions</p>
             </div>
-            <div className="flex items-center gap-2">
-              <button className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                <Search className="w-5 h-5" />
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <button className="p-1.5 sm:p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               <button onClick={() => setViewMode(viewMode === "cards" ? "list" : "cards")}
-                className="px-3 py-2 text-sm font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition">
-                {viewMode === "cards" ? "List View" : "Card View"}
+                className="px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition whitespace-nowrap">
+                {viewMode === "cards" ? "List" : "Cards"}
               </button>
             </div>
           </div>
 
-          <div className="p-6">
+          <div className="p-4 sm:p-6">
             {loading ? (
-              <div className="text-center py-12">
+              <div className="text-center py-10 sm:py-12">
                 <div className="inline-block w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4" />
-                <p className="text-slate-600">Loading submissions...</p>
+                <p className="text-slate-600 text-sm">Loading submissions...</p>
               </div>
             ) : submissions.length === 0 ? (
-              <div className="text-center py-16">
-                <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileText className="w-10 h-10 text-slate-400" />
+              <div className="text-center py-12 sm:py-16">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FileText className="w-8 h-8 sm:w-10 sm:h-10 text-slate-400" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">No submissions yet</h3>
-                <p className="text-slate-600 mb-6 max-w-md mx-auto">Submit your first manuscript for peer review.</p>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">No submissions yet</h3>
+                <p className="text-slate-600 mb-6 max-w-md mx-auto text-sm sm:text-base">Submit your first manuscript for peer review.</p>
                 <button onClick={() => navigate('/submit')}
-                  className="px-8 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition inline-flex items-center gap-2">
-                  <Plus className="w-5 h-5" /> Submit Your First Paper
+                  className="px-6 sm:px-8 py-2.5 sm:py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition inline-flex items-center gap-2 text-sm sm:text-base">
+                  <Plus className="w-4 h-4 sm:w-5 sm:h-5" /> Submit Your First Paper
                 </button>
               </div>
             ) : viewMode === "cards" ? (
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {submissions.map(paper => (
-                  <div key={paper.id} className="bg-gradient-to-br from-white to-slate-50 rounded-xl border border-slate-200 hover:shadow-lg transition p-6">
-                    <div className="flex items-start gap-3 mb-4">
-                      <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <FileText className="w-6 h-6 text-indigo-600" />
+                  <div key={paper.id} className="bg-gradient-to-br from-white to-slate-50 rounded-xl border border-slate-200 hover:shadow-lg transition p-4 sm:p-6">
+                    <div className="flex items-start gap-3 mb-3 sm:mb-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-slate-900 mb-2 leading-tight">{paper.title}</h3>
+                        <h3 className="font-bold text-slate-900 mb-2 leading-tight text-sm sm:text-base">{paper.title}</h3>
                         <StatusBadge status={paper.status} />
                       </div>
                     </div>
@@ -285,9 +289,9 @@ export default function AuthorDashboard() {
                       </div>
                     )}
 
-                    <div className="space-y-1.5 mb-4 text-sm text-slate-600">
+                    <div className="space-y-1.5 mb-3 sm:mb-4 text-xs sm:text-sm text-slate-600">
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                        <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
                         <span>Submitted: {formatDate(paper.created_at)}</span>
                       </div>
                       {paper.category && (
@@ -298,15 +302,15 @@ export default function AuthorDashboard() {
                       )}
                     </div>
 
-                    <div className="flex gap-2 pt-4 border-t border-slate-200">
+                    <div className="flex gap-2 pt-3 sm:pt-4 border-t border-slate-200">
                       <button onClick={() => setSelectedPaper(paper)}
-                        className="flex-1 px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition flex items-center justify-center gap-2">
-                        <Eye className="w-4 h-4" /> View Details
+                        className="flex-1 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition flex items-center justify-center gap-1.5 sm:gap-2">
+                        <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> View
                       </button>
                       {paper.file_url && (
                         <button onClick={() => window.open(paper.file_url, '_blank')}
-                          className="flex-1 px-4 py-2 text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 rounded-lg transition flex items-center justify-center gap-2">
-                          <Download className="w-4 h-4" /> Download
+                          className="flex-1 px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 rounded-lg transition flex items-center justify-center gap-1.5 sm:gap-2">
+                          <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Download
                         </button>
                       )}
                     </div>
@@ -314,22 +318,25 @@ export default function AuthorDashboard() {
                 ))}
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {submissions.map(paper => (
-                  <div key={paper.id} className="bg-white p-5 rounded-xl border border-slate-200 hover:shadow-md transition flex items-center justify-between">
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <FileText className="w-5 h-5 text-indigo-600" />
+                  <div key={paper.id} className="bg-white p-3 sm:p-5 rounded-xl border border-slate-200 hover:shadow-md transition flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-slate-900 mb-1 truncate">{paper.title}</h3>
+                        <h3 className="font-semibold text-slate-900 mb-0.5 sm:mb-1 truncate text-sm sm:text-base">{paper.title}</h3>
                         <p className="text-xs text-slate-500">Submitted on {formatDate(paper.created_at)}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <StatusBadge status={paper.status} />
-                      <button onClick={() => setSelectedPaper(paper)} className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
-                        <Eye className="w-5 h-5" />
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      {/* Hide badge on very small screens in list view to avoid overflow */}
+                      <span className="hidden sm:block">
+                        <StatusBadge status={paper.status} />
+                      </span>
+                      <button onClick={() => setSelectedPaper(paper)} className="p-1.5 sm:p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition">
+                        <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
                     </div>
                   </div>
@@ -342,65 +349,66 @@ export default function AuthorDashboard() {
 
       {/* Detail Modal */}
       {selectedPaper && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-slate-900">Manuscript Details</h2>
-              <button onClick={() => setSelectedPaper(null)} className="p-2 hover:bg-slate-100 rounded-lg transition">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 z-50">
+          {/* Bottom sheet on mobile, centered modal on sm+ */}
+          <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="sticky top-0 bg-white border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900">Manuscript Details</h2>
+              <button onClick={() => setSelectedPaper(null)} className="p-1.5 sm:p-2 hover:bg-slate-100 rounded-lg transition">
                 <XCircle className="w-5 h-5" />
               </button>
             </div>
-            <div className="p-6 space-y-6">
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-3">{selectedPaper.title}</h3>
+                <h3 className="text-lg sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-3 leading-snug">{selectedPaper.title}</h3>
                 <StatusBadge status={selectedPaper.status} />
                 {STATUS_CONFIG[selectedPaper.status] && (
-                  <p className="text-sm text-slate-500 mt-2 italic">{STATUS_CONFIG[selectedPaper.status].desc}</p>
+                  <p className="text-xs sm:text-sm text-slate-500 mt-2 italic">{STATUS_CONFIG[selectedPaper.status].desc}</p>
                 )}
               </div>
 
               {selectedPaper.editorial_comments && (
-                <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
-                  <p className="text-sm font-semibold text-amber-900 mb-2">📋 Editorial Decision & Comments</p>
-                  <p className="text-sm text-amber-800 leading-relaxed">{selectedPaper.editorial_comments}</p>
+                <div className="p-3 sm:p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                  <p className="text-xs sm:text-sm font-semibold text-amber-900 mb-1.5 sm:mb-2">📋 Editorial Decision & Comments</p>
+                  <p className="text-xs sm:text-sm text-amber-800 leading-relaxed">{selectedPaper.editorial_comments}</p>
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-4 p-4 bg-slate-50 rounded-lg text-sm">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 p-3 sm:p-4 bg-slate-50 rounded-lg text-sm">
                 <div>
                   <p className="text-xs font-semibold text-slate-500 mb-1">Submission Date</p>
-                  <p className="font-medium">{formatDate(selectedPaper.created_at, { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                  <p className="font-medium text-xs sm:text-sm">{formatDate(selectedPaper.created_at, { month: 'long', day: 'numeric', year: 'numeric' })}</p>
                 </div>
                 {selectedPaper.published_date && (
                   <div>
                     <p className="text-xs font-semibold text-slate-500 mb-1">Published Date</p>
-                    <p className="font-medium">{formatDate(selectedPaper.published_date, { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                    <p className="font-medium text-xs sm:text-sm">{formatDate(selectedPaper.published_date, { month: 'long', day: 'numeric', year: 'numeric' })}</p>
                   </div>
                 )}
               </div>
 
               {selectedPaper.abstract && (
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900 mb-2">Abstract</h4>
-                  <p className="text-sm text-slate-700 leading-relaxed bg-slate-50 rounded-lg p-3">{selectedPaper.abstract}</p>
+                  <h4 className="text-xs sm:text-sm font-semibold text-slate-900 mb-2">Abstract</h4>
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed bg-slate-50 rounded-lg p-3">{selectedPaper.abstract}</p>
                 </div>
               )}
 
               {selectedPaper.keywords?.length > 0 && (
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900 mb-2">Keywords</h4>
-                  <div className="flex flex-wrap gap-2">
+                  <h4 className="text-xs sm:text-sm font-semibold text-slate-900 mb-2">Keywords</h4>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {selectedPaper.keywords.map((kw, i) => (
-                      <span key={i} className="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-medium rounded-full">{kw}</span>
+                      <span key={i} className="px-2.5 py-1 bg-indigo-50 text-indigo-700 text-xs font-medium rounded-full">{kw}</span>
                     ))}
                   </div>
                 </div>
               )}
 
-              <div className="flex gap-3 pt-4 border-t border-slate-200">
+              <div className="flex gap-3 pt-3 sm:pt-4 border-t border-slate-200">
                 {selectedPaper.file_url && (
                   <button onClick={() => window.open(selectedPaper.file_url, '_blank')}
-                    className="flex-1 px-4 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2">
+                    className="flex-1 px-4 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2 text-sm">
                     <Download className="w-4 h-4" /> Download Manuscript
                   </button>
                 )}

@@ -11,7 +11,7 @@ export default function Contact() {
             <Mail className="w-8 h-8 text-indigo-600 mb-4" />
             <h3 className="font-bold text-lg mb-2">Email</h3>
             <a href="mailto:editor@toess-journal.org" className="text-indigo-600 hover:underline">
-              editor@toess-journal.org
+              editor@toess.org
             </a>
           </div>
 
@@ -27,7 +27,7 @@ export default function Contact() {
             <MapPin className="w-8 h-8 text-indigo-600 mb-4" />
             <h3 className="font-bold text-lg mb-2">Address</h3>
             <p className="text-sm text-gray-600">
-              Bangalore, Karnataka<br />
+              379, 7th cross, 5th main, NGEF Layout, Mallathahalli, Bangalore, India - 560 056<br />
               India
             </p>
           </div>

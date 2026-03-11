@@ -226,7 +226,7 @@ export default function Navbar() {
             <img src="/toess-logo.svg" alt="ToESS" />
             <div className="nb-logo-text">
               <div className="nb-logo-name">ToESS</div>
-              <div className="nb-logo-sub">Evolutionary Smart Systems</div>
+              <div className="nb-logo-sub">Transactions on Evolutionary Smart Systems</div>
             </div>
           </Link>
 

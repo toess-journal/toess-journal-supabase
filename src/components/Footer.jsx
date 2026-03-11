@@ -87,7 +87,7 @@ export default function Footer() {
                     fontFamily: "'Inter', sans-serif",
                   }}
                 >
-                  Evolutionary Smart Systems
+                  Transactions on Evolutionary Smart Systems
                 </span>
               </div>
             </Link>
