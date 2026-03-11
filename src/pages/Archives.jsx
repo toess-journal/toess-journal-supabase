@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import loadingAnimation from "../assets/lottie/loading.json";
 import { getPublishedPapers } from "../services/submissionService";
+import Modal from "../components/Modal";
 import {
   Search, FileText, Calendar, Tag, BookOpen, Download,
   Filter, Award, Eye, X, Users, TrendingUp,
@@ -262,11 +263,11 @@ export default function Archives() {
         </div>
       </div>
 
-      {/* ── Detail Modal — bottom sheet on mobile ── */}
+      {/* ── Detail Modal ── */}
       {selectedPaper && (
-        <div style={{position:'fixed',inset:0,zIndex:9999,backgroundColor:'rgba(0,0,0,0.6)',display:'flex',alignItems:'flex-end',justifyContent:'center'}} className="sm:items-center sm:p-4">
-          <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-4xl shadow-2xl" style={{maxHeight:'92vh',overflowY:'auto'}}>
-
+        <Modal onClose={() => setSelectedPaper(null)} maxWidth="max-w-4xl">
+          {(close) => (
+            <>
             {/* Modal Header */}
             <div className="sticky top-0 bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-4 sm:p-6 rounded-t-2xl z-10">
               <div className="flex items-start justify-between gap-3">
@@ -285,8 +286,7 @@ export default function Archives() {
                     </span>
                   </div>
                 </div>
-                <button onClick={() => setSelectedPaper(null)}
-                  className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition flex-shrink-0">
+                <button onClick={close} className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition flex-shrink-0">
                   <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               </div>
@@ -298,10 +298,10 @@ export default function Archives() {
               {/* Publication Info */}
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg text-sm">
                 {[
-                  selectedPaper.category    && { label: "Category",       value: selectedPaper.category },
-                  selectedPaper.article_type && { label: "Article Type",  value: selectedPaper.article_type },
+                  selectedPaper.category     && { label: "Category",       value: selectedPaper.category },
+                  selectedPaper.article_type && { label: "Article Type",   value: selectedPaper.article_type },
                   selectedPaper.status === "published" && { label: "Status", value: "Published" },
-                  selectedPaper.updated_at  && { label: "Published Date", value: formatDate(selectedPaper.updated_at) },
+                  selectedPaper.updated_at   && { label: "Published Date", value: formatDate(selectedPaper.updated_at) },
                 ].filter(Boolean).map(({ label, value }) => (
                   <div key={label}>
                     <span className="text-xs sm:text-sm font-semibold text-gray-600 block mb-0.5">{label}</span>
@@ -327,8 +327,7 @@ export default function Archives() {
                       ? selectedPaper.keywords
                       : selectedPaper.keywords.split(",")
                     ).map((kw, idx) => (
-                      <span key={idx}
-                        className="inline-flex items-center gap-1 bg-indigo-100 text-indigo-700 px-2.5 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium">
+                      <span key={idx} className="inline-flex items-center gap-1 bg-indigo-100 text-indigo-700 px-2.5 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium">
                         <Tag className="w-3 h-3" />
                         {typeof kw === "string" ? kw.trim() : kw}
                       </span>
@@ -354,12 +353,8 @@ export default function Archives() {
                               <span className="text-xs text-indigo-600 ml-2">(Corresponding)</span>
                             )}
                           </p>
-                          {author.institution && (
-                            <p className="text-xs sm:text-sm text-gray-600 truncate">{author.institution}</p>
-                          )}
-                          {author.email && (
-                            <p className="text-xs sm:text-sm text-gray-500 truncate">{author.email}</p>
-                          )}
+                          {author.institution && <p className="text-xs sm:text-sm text-gray-600 truncate">{author.institution}</p>}
+                          {author.email && <p className="text-xs sm:text-sm text-gray-500 truncate">{author.email}</p>}
                         </div>
                       </div>
                     ))}
@@ -369,7 +364,7 @@ export default function Archives() {
 
               {/* Actions */}
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-3 sm:pt-4 border-t">
-                <button onClick={() => setSelectedPaper(null)}
+                <button onClick={close}
                   className="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 sm:py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg transition font-medium text-sm">
                   Close
                 </button>
@@ -382,8 +377,9 @@ export default function Archives() {
                 )}
               </div>
             </div>
-          </div>
-        </div>
+            </>
+          )}
+        </Modal>
       )}
     </div>
   );

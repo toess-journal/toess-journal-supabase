@@ -9,6 +9,7 @@ import { supabase } from "../../services/supabase";
 import { getAllSubmissions, updateSubmission } from "../../services/submissionService";
 import { getAllAssignments } from "../../services/reviewerService";
 import { sendPaperPublishedEmail } from "../../services/emailService";
+import Modal from "../../components/Modal";
 
 const STATUS_CONFIG = {
   submitted:          { label: "Submitted",        color: "bg-amber-50 text-amber-700 border-amber-200",       icon: Clock },
@@ -475,13 +476,14 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      {/* ── Detail Modal — bottom sheet on mobile ── */}
+      {/* ── Detail Modal ── */}
       {selectedPaper && (
-        <div style={{position:'fixed',inset:0,zIndex:9999,backgroundColor:'rgba(0,0,0,0.55)',display:'flex',alignItems:'flex-end',justifyContent:'center'}} className="sm:items-center sm:p-4">
-          <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-3xl shadow-2xl" style={{maxHeight:'92vh',overflowY:'auto'}}>
+        <Modal onClose={() => setSelectedPaper(null)}>
+          {(close) => (
+            <>
             <div className="sticky top-0 bg-white border-b border-slate-200 px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-between z-10">
               <h2 className="text-base sm:text-lg font-bold text-slate-900">Manuscript Details</h2>
-              <button onClick={() => setSelectedPaper(null)} className="p-1.5 sm:p-2 hover:bg-slate-100 rounded-lg transition">
+              <button onClick={close} className="p-1.5 sm:p-2 hover:bg-slate-100 rounded-lg transition">
                 <X className="w-5 h-5 text-slate-500" />
               </button>
             </div>
@@ -586,8 +588,9 @@ export default function AdminDashboard() {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
+            </>
+          )}
+        </Modal>
       )}
     </div>
   );

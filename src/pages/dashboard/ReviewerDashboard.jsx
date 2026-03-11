@@ -6,6 +6,7 @@ import {
   submitReview,
 } from "../../services/reviewerService";
 import { sendReviewSubmittedEmail } from "../../services/emailService";
+import Modal from "../../components/Modal";
 import {
   FileText,
   Clock,
@@ -306,11 +307,11 @@ export default function ReviewerDashboard() {
         </div>
       )}
 
-      {/* Submit Review Modal — bottom sheet on mobile, centered on sm+ */}
+      {/* Submit Review Modal */}
       {selectedAssignment && (
-        <div style={{position:'fixed',inset:0,zIndex:9999,backgroundColor:'rgba(0,0,0,0.6)',display:'flex',alignItems:'flex-end',justifyContent:'center'}} className="sm:items-center sm:p-4">
-          <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-3xl shadow-2xl" style={{maxHeight:'95vh',overflowY:'auto'}}>
-
+        <Modal onClose={() => setSelectedAssignment(null)}>
+          {(close) => (
+            <>
             {/* Modal Header */}
             <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-4 sm:p-6 rounded-t-2xl sticky top-0 z-10">
               <div className="flex justify-between items-start gap-3">
@@ -320,10 +321,7 @@ export default function ReviewerDashboard() {
                     {selectedAssignment.paper?.title || "Untitled Paper"}
                   </p>
                 </div>
-                <button
-                  onClick={() => setSelectedAssignment(null)}
-                  className="p-1.5 hover:bg-white/20 rounded-lg transition flex-shrink-0"
-                >
+                <button onClick={close} className="p-1.5 hover:bg-white/20 rounded-lg transition flex-shrink-0">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -348,10 +346,10 @@ export default function ReviewerDashboard() {
                     <span className="text-gray-400 font-normal text-xs sm:text-sm">(1 = Poor, 5 = Excellent)</span>
                   </h3>
                   <div className="grid grid-cols-2 gap-4 sm:gap-5">
-                    <StarRating label="Originality"       value={reviewForm.originalityRating}  onChange={(v) => setReviewForm((p) => ({ ...p, originalityRating: v }))} />
-                    <StarRating label="Methodology"       value={reviewForm.methodologyRating}  onChange={(v) => setReviewForm((p) => ({ ...p, methodologyRating: v }))} />
-                    <StarRating label="Clarity of Writing" value={reviewForm.clarityRating}     onChange={(v) => setReviewForm((p) => ({ ...p, clarityRating: v }))} />
-                    <StarRating label="Overall Quality"   value={reviewForm.overallRating}      onChange={(v) => setReviewForm((p) => ({ ...p, overallRating: v }))} />
+                    <StarRating label="Originality"        value={reviewForm.originalityRating}  onChange={(v) => setReviewForm((p) => ({ ...p, originalityRating: v }))} />
+                    <StarRating label="Methodology"        value={reviewForm.methodologyRating}  onChange={(v) => setReviewForm((p) => ({ ...p, methodologyRating: v }))} />
+                    <StarRating label="Clarity of Writing" value={reviewForm.clarityRating}      onChange={(v) => setReviewForm((p) => ({ ...p, clarityRating: v }))} />
+                    <StarRating label="Overall Quality"    value={reviewForm.overallRating}      onChange={(v) => setReviewForm((p) => ({ ...p, overallRating: v }))} />
                   </div>
                 </div>
 
@@ -365,16 +363,11 @@ export default function ReviewerDashboard() {
                       { value: "major-revision", label: "↻ Major Revision", cls: "border-orange-500 bg-orange-50 text-orange-700" },
                       { value: "reject",         label: "✕ Reject",         cls: "border-red-500 bg-red-50 text-red-700" },
                     ].map((opt) => (
-                      <button
-                        key={opt.value}
-                        type="button"
+                      <button key={opt.value} type="button"
                         onClick={() => setReviewForm((p) => ({ ...p, recommendation: opt.value }))}
                         className={`p-2.5 sm:p-3 rounded-xl border-2 text-xs sm:text-sm font-medium transition ${
-                          reviewForm.recommendation === opt.value
-                            ? opt.cls
-                            : "border-gray-200 text-gray-600 hover:border-gray-300"
-                        }`}
-                      >
+                          reviewForm.recommendation === opt.value ? opt.cls : "border-gray-200 text-gray-600 hover:border-gray-300"
+                        }`}>
                         {opt.label}
                       </button>
                     ))}
@@ -384,49 +377,40 @@ export default function ReviewerDashboard() {
                 {/* Text fields */}
                 <div className="space-y-3 sm:space-y-4">
                   {[
-                    { key: "strengths",           label: "Strengths",                                    placeholder: "Describe the key strengths of this paper...",      rows: 3 },
-                    { key: "weaknesses",          label: "Weaknesses",                                   placeholder: "Describe areas that need improvement...",           rows: 3 },
-                    { key: "detailedComments",    label: "Detailed Comments",                            placeholder: "Provide detailed comments for the authors...",      rows: 5 },
-                    { key: "confidentialComments",label: "Confidential Comments (editors only — optional)", placeholder: "Comments only the editor will see...",           rows: 3, optional: true },
+                    { key: "strengths",            label: "Strengths",                                       placeholder: "Describe the key strengths of this paper...",   rows: 3 },
+                    { key: "weaknesses",           label: "Weaknesses",                                      placeholder: "Describe areas that need improvement...",        rows: 3 },
+                    { key: "detailedComments",     label: "Detailed Comments",                               placeholder: "Provide detailed comments for the authors...",   rows: 5 },
+                    { key: "confidentialComments", label: "Confidential Comments (editors only — optional)", placeholder: "Comments only the editor will see...",           rows: 3, optional: true },
                   ].map(({ key, label, placeholder, rows, optional }) => (
                     <div key={key}>
                       <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">
                         {label} {!optional && <span className="text-red-500">*</span>}
                       </label>
-                      <textarea
-                        rows={rows}
-                        required={!optional}
-                        value={reviewForm[key]}
+                      <textarea rows={rows} required={!optional} value={reviewForm[key]}
                         onChange={(e) => setReviewForm((p) => ({ ...p, [key]: e.target.value }))}
                         className="w-full border-2 border-gray-200 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 focus:border-indigo-500 focus:outline-none text-xs sm:text-sm resize-none"
-                        placeholder={placeholder}
-                      />
+                        placeholder={placeholder} />
                     </div>
                   ))}
                 </div>
 
                 {/* Footer buttons */}
                 <div className="flex gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedAssignment(null)}
-                    className="flex-1 py-2.5 sm:py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition text-sm"
-                  >
+                  <button type="button" onClick={close}
+                    className="flex-1 py-2.5 sm:py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition text-sm">
                     Cancel
                   </button>
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="flex-1 py-2.5 sm:py-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white rounded-lg font-medium transition flex items-center justify-center gap-2 text-sm"
-                  >
+                  <button type="submit" disabled={submitting}
+                    className="flex-1 py-2.5 sm:py-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white rounded-lg font-medium transition flex items-center justify-center gap-2 text-sm">
                     <Send className="w-4 h-4" />
                     {submitting ? "Submitting..." : "Submit Review"}
                   </button>
                 </div>
               </form>
             )}
-          </div>
-        </div>
+            </>
+          )}
+        </Modal>
       )}
     </div>
   );
