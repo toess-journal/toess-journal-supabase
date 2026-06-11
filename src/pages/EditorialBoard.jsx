@@ -79,7 +79,7 @@ export default function EditorialBoard() {
           <MemberCardPro name="Ms. Giriyappagari Naga Sowmya" credentials="Data Engineer" affiliation="SARGAD" location="USA" />
           <MemberCardPro name="Mrs. Latha A" credentials="TL & Layout Manager" affiliation="Eximietas Design" location="India" />
           <MemberCardPro name="Mr. Veeramachaneni Dinesh" credentials="Senior Project Manager" affiliation="Xavient Technologies (TELUS)" location="India" />
-          <MemberCardPro name="Mr. Yashraj M." credentials="Managing Director" affiliation="LUMBINI Technologies" location="USA" />
+          <MemberCardPro name="Mr. Yeshraj Maganti." credentials="Application Architect" affiliation="Bank of America" location="USA" />
           <MemberCardPro name="Mr. Ramesh Chigurupati" credentials="ETL Analyst" affiliation="DataPro" location="USA" />
           <MemberCardPro name="Mrs. Sathya. J. S." affiliation="Wipro Technologies" location="USA" />
           <MemberCardPro name="Mrs. Anisha Mullamuri" affiliation="CloudPay" location="United Kingdom" />
