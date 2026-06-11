@@ -49,7 +49,7 @@ export default function EditorialBoard() {
         <BoardSection id="deputy-editors" title="Deputy Editors-in-Chief" icon={<Award className="w-5 h-5" />} color="purple"
           description="Set editorial policy, uphold academic standards, advise on content quality, attract submissions, represent journal reputation"
           expanded={expandedSection === 'deputy-editors'} onToggle={() => toggleSection('deputy-editors')}>
-          <MemberCardPro name="Dr. Ravi Kumar Tata" credentials="Ph.D." affiliation="KL (Deemed to be University)" location="Guntur, Andhra Pradesh" role="Deputy Editor-in-Chief" email="rktata@kluniversity.in" 
+          <MemberCardPro name="Dr. Ravi Kumar Tata" credentials="Ph.D." affiliation="KL (Deemed to be University)" location="Guntur, Andhra Pradesh" role="Deputy Editor-in-Chief" email="rktata@kluniversity.in" />
           <MemberCardPro name="Dr. Qin Xin" credentials="Professor" affiliation="University of the Faroe Islands" location="Denmark" email="qinx@setur.fo" role="Deputy Editor-in-Chief" />
           <MemberCardPro name="Dr. Dac-Nhuong Le" credentials="Ph.D., Dean & Professor" affiliation="Faculty of Information Technology, Haiphong University" location="Vietnam" email="Nhuongld@hus.edu.vn" role="Deputy Editor-in-Chief" />
           <MemberCardPro name="Dr. Basim Mohammad Fadel Alhadidi" credentials="Ph.D., Professor" affiliation="Al-Balqa Applied University" location="Jordan" email="b_hadidi@bau.edu.jo" role="Deputy Editor-in-Chief" />
